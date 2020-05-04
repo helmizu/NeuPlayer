@@ -17,10 +17,13 @@
     "baseUrl": ".",
     "paths": {
       "*": ["./app/*"],
+      "@components": ["./app/components"],
+      "@theme": ["./app/theme"],
       "@components/*": ["./app/components/*"],
+      "@theme/*": ["./app/theme/*"],
     },
   },
-  "exclude": ["node_modules", "babel.config.js", "metro.config.js", "jest.config.js"],
+  "exclude": ["node_modules", "babel.config.js", "metro.config.js", ".eslintrc.js"],
   "include": ["index.js", "app", "test", "storybook"]
   
 }

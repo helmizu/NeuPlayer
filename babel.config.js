@@ -18,6 +18,7 @@ module.exports = {
         extensions: ['.ios.js', '.android.js', '.js', '.jsx', '.ts', '.tsx', '.json'],
         alias: {
           "@components": "./app/components",
+          "@theme": "./app/theme",
         }
       }
     ]

@@ -69,6 +69,7 @@
     "eslint": "^6.6.0",
     "eslint-config-prettier": "^6.0.0",
     "eslint-config-standard": "^14.1.0",
+    "eslint-import-resolver-alias": "^1.1.2",
     "eslint-plugin-import": "^2.15.0",
     "eslint-plugin-node": "^11.0.0",
     "eslint-plugin-promise": "^4.0.1",
