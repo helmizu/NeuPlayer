@@ -19,6 +19,7 @@ module.exports = {
         alias: {
           "@components": "./app/components",
           "@theme": "./app/theme",
+          "@assets": "./app/assets",
         }
       }
     ]

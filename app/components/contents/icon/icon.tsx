@@ -1,7 +1,7 @@
 import * as React from "react"
 import { View, Image, ImageStyle } from "react-native"
+import { icons } from "@assets"
 import { IconProps } from "./icon.props"
-import { icons } from "./icons"
 
 const ROOT: ImageStyle = {
   resizeMode: "contain",

@@ -1378,6 +1378,11 @@
     "@types/yargs" "^15.0.0"
     chalk "^3.0.0"
 
+"@miblanchard/react-native-slider@^1.2.2":
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/@miblanchard/react-native-slider/-/react-native-slider-1.2.2.tgz#8a5164c646e180990123afad0a2143dd803d4a66"
+  integrity sha512-PmR4gYOAhtgHEwlzszhjdjOZtRRELxRmg6zpCN2eZTwW7lll05TPve2QxA5YfuDwXL69OH+3HtZVr0yUIlxmEQ==
+
 "@mrmlnc/readdir-enhanced@^2.2.1":
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/@mrmlnc/readdir-enhanced/-/readdir-enhanced-2.2.1.tgz#524af240d1a360527b730475ecfa1344aa540dde"
