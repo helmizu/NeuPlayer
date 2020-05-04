@@ -87,7 +87,7 @@ export const WelcomeScreen: React.FunctionComponent<WelcomeScreenProps> = props 
   return (
     <View testID="WelcomeScreen" style={FULL}>
       <Wallpaper />
-      <Screen style={CONTAINER} preset="scroll" backgroundColor={color.transparent}>
+      <Screen style={CONTAINER} preset="scroll" statusBarColor={color.transparent} backgroundColor={color.transparent}>
         <Header headerTx="welcomeScreen.poweredBy" style={HEADER} titleStyle={HEADER_TITLE} />
         <Text style={TITLE_WRAPPER}>
           <Text style={TITLE} text="Your new app, " />
