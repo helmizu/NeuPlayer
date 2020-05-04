@@ -24,12 +24,15 @@ ignite-project
 │   ├── components
 │   ├── i18n
 │   ├── utils
-│   ├── models
 │   ├── navigation
 │   ├── screens
 │   ├── services
 │   ├── theme
 │   ├── app.tsx
+├── bin
+│   ├── postinstall
+│   ├── setup
+├── e2e
 ├── storybook
 │   ├── views
 │   ├── index.ts
@@ -67,77 +70,114 @@ ignite-project
 
 ```
 
-### ./app directory
+## How to Setup
 
-Included in an Ignite boilerplate project is the `app` directory. This is a directory you would normally have to create when using vanilla React Native.
+**Step 1:** git clone this repo:
 
-The inside of the src directory looks similar to the following:
+**Step 2:** cd to the cloned repo:
+
+**Step 3:** Run the setup script: `./bin/setup`
+
+## How to Run App
+
+1.  cd to the repo
+2.  Run Build for either OS
+
+- for iOS
+  - run `npm run ios`
+- for Android
+  - run `npm run android`
+
+
+# Deploying
+
+1. Follow steps 2-5 in the secrets repo (See Jamon or Robin for access)
+2. Open the Xcode Workspace and go to Build Settings. Make sure "Manage certificates automatically" is not checked, and select the correct certificate. If you don't see any certificates you may need to run `fastlane match development` and `fastlane match appstore`
+3. To deploy iOS beta:
 
 ```
-app
-│── components
-│── i18n
-├── models
-├── navigation
-├── screens
-├── services
-├── theme
-├── utils
-└── app.tsx
+cd ios
+bundle
+bundle exec fastlane ios bump_build_number
+bundle exec fastlane ios beta
 ```
 
-**components**
-This is where your React components will live. Each component will have a directory containing the `.tsx` file, along with a story file, and optionally `.presets`, and `.props` files for larger components. The app will come with some commonly used components like Button.
+- If prompted for an app-specific password, it's located in the secrets repo.
+- If the build is successful, commit the new build number.
 
-**i18n**
-This is where your translations will live if you are using `react-native-i18n`.
+4. To deploy Android beta:
 
-**models**
-This is where your app's models will live. Each model has a directory which will contain the `mobx-state-tree` model file, test file, and any other supporting files like actions, types, etc.
+```
+cd android
+bundle
+bundle exec fastlane android beta
+```
 
-**navigation**
-This is where your `react-navigation` navigators will live.
+- If the build was successful, commit the build number
 
-**screens**
-This is where your screen components will live. A screen is a React component which will take up the entire screen and be part of the navigation hierarchy. Each screen will have a directory containing the `.tsx` file, along with any assets or other helper files.
+# :no_entry_sign: TSLint Compliant
 
-**services**
-Any services that interface with the outside world will live here (think REST APIs, Push Notifications, etc.).
+This project adheres to TSLint and Prettier. We suggest you enable linting to keep your project compliant during development. You can lint the project by running `yarn lint`.
 
-**theme**
-Here lives the theme for your application, including spacing, colors, and typography.
+**To Lint on Commit**
 
-**utils**
-This is a great place to put miscellaneous helpers and utilities. Things like date helpers, formatters, etc. are often found here. However, it should only be used for things that are truely shared across your application. If a helper or utility is only used by a specific component or model, consider co-locating your helper with that component or model.
+This is implemented using [husky](https://github.com/typicode/husky). There is no additional setup needed.
 
-**app.tsx** This is the entry point to your app. This is where you will find the main App component which renders the rest of the application. This is also where you will specify whether you want to run the app in storybook mode.
+**Bypass Lint**
 
-### ./ignite directory
+If you have to bypass lint for a special commit that you will come back and clean (pushing something to a branch etc.) then you can bypass git hooks with adding `--no-verify` to your commit command.
 
-The `ignite` directory stores all things Ignite, including CLI and boilerplate items. Here you will find generators, plugins and examples to help you get started with React Native.
+**Understanding Linting Errors**
 
-### ./storybook directory
+The linting rules are from tslint-config-prettier. [Regular TS errors can be found with descriptions here](https://palantir.github.io/tslint/rules/).
 
-This is where your stories will be registered and where the Storybook configs will live
+# Detox End-To-End Testing
 
-### ./test directory
+## Setup
 
-This directory will hold your Jest configs and mocks, as well as your [storyshots](https://github.com/storybooks/storybook/tree/master/addons/storyshots) test file. This is a file that contains the snapshots of all your component storybooks.
+_Note that Detox is only configured for macOS._
 
-## Running Storybook
+To get your Detox tests up and running, you'll need to install some global dependencies:
 
-From the command line in your generated app's root directory, enter `yarn run storybook`
-This starts up the storybook server.
+1. Install the latest version of [Homebrew](https://brew.sh/)
 
-In `app/app.tsx`, change `SHOW_STORYBOOK` to `true` and reload the app.
+2. Make sure you have Node installed (at least 8.6.0).
 
-For Visual Studio Code users, there is a handy extension that makes it easy to load Storybook use cases into a running emulator via tapping on items in the editor sidebar. Install the `React Native Storybook` extension by `Orta`, hit `cmd + shift + P` and select "Reconnect Storybook to VSCode". Expand the STORYBOOK section in the sidebar to see all use cases for components that have `.story.tsx` files in their directories.
+3. Install `applesimutils`, which will allow Detox to communicate with the iOS simulator:
 
-## Previous Boilerplates
+```bash
+brew tap wix/brew && brew install applesimutils
+```
 
-- [2017 aka Andross](https://github.com/infinitered/ignite-andross)
-- [2016 aka Ignite 1.0](https://github.com/infinitered/ignite-ir-boilerplate-2016)
+4. Install the Detox CLI
 
-## Premium Support
+```bash
+  yarn global add detox-cli
+```
 
-[Ignite CLI](https://infinite.red/ignite), [Ignite Andross](https://github.com/infinitered/ignite-andross), and [Ignite Bowser](https://github.com/infinitered/ignite-bowser), as open source projects, are free to use and always will be. [Infinite Red](https://infinite.red/) offers premium Ignite support and general mobile app design/development services. Email us at [hello@infinite.red](mailto:hello@infinite.red) to get in touch with us for more details.
+## Adding tests
+
+We've gotten you started with `./e2e/firstTest.spec.js`, which tests that the two main example screens render properly.
+
+Note that in order to pick up elements by ID, we've added the `testID` prop to the component.
+
+## Running tests
+
+1. Start the packager
+
+```
+yarn start
+```
+
+2. Run the app
+
+In a separate terminal window from the packager:
+
+```
+yarn build:e2e
+```
+
+3. Run the tests
+
+```
+yarn test:e2e

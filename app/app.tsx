@@ -12,7 +12,6 @@ import { SafeAreaProvider, initialWindowSafeAreaInsets } from "react-native-safe
 
 import { RootNavigator, exitRoutes, setRootNavigation } from "./navigation"
 import { useBackButtonHandler } from "./navigation/use-back-button-handler"
-import { RootStore, RootStoreProvider, setupRootStore } from "./models/root-store"
 import * as storage from "./utils/storage"
 import getActiveRouteName from "./navigation/get-active-routename"
 
@@ -46,7 +45,6 @@ export const NAVIGATION_PERSISTENCE_KEY = "NAVIGATION_STATE"
  */
 const App: React.FunctionComponent<{}> = () => {
   const navigationRef = useRef<NavigationContainerRef>()
-  const [rootStore, setRootStore] = useState<RootStore | undefined>(undefined)
   const [initialNavigationState, setInitialNavigationState] = useState()
   const [isRestoringNavigationState, setIsRestoringNavigationState] = useState(true)
 
@@ -76,12 +74,6 @@ const App: React.FunctionComponent<{}> = () => {
   }
 
   useEffect(() => {
-    ;(async () => {
-      setupRootStore().then(setRootStore)
-    })()
-  }, [])
-
-  useEffect(() => {
     const restoreState = async () => {
       try {
         const state = await storage.load(NAVIGATION_PERSISTENCE_KEY)
@@ -107,21 +99,16 @@ const App: React.FunctionComponent<{}> = () => {
   //
   // You're welcome to swap in your own component to render if your boot up
   // sequence is too slow though.
-  if (!rootStore) {
-    return null
-  }
 
   // otherwise, we're ready to render the app
   return (
-    <RootStoreProvider value={rootStore}>
-      <SafeAreaProvider initialSafeAreaInsets={initialWindowSafeAreaInsets}>
-        <RootNavigator
-          ref={navigationRef}
-          initialState={initialNavigationState}
-          onStateChange={onNavigationStateChange}
-        />
-      </SafeAreaProvider>
-    </RootStoreProvider>
+    <SafeAreaProvider initialSafeAreaInsets={initialWindowSafeAreaInsets}>
+      <RootNavigator
+        ref={navigationRef}
+        initialState={initialNavigationState}
+        onStateChange={onNavigationStateChange}
+      />
+    </SafeAreaProvider>
   )
 }
 
